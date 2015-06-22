@@ -4,6 +4,28 @@ Changelog
 
 Here you can find the recent changes to cookiecutter-pypackage
 
+2015-06-18
+----------
+
+- Added tox tests for all supported python versions, docs and flake8
+- Made sure the entire project is tests correctly when initializing
+- Replaced api docs with modules, the Sphinx default
+- Added support for separate `pkg_name` and `repo_name` since most repos use
+  dashes while `pkg_name` requires an underscore instead.
+- Added coveralls support
+- Made sure the entire project is flake8 (pep8/pyflakes) compliant
+
+2015-06-17
+----------
+
+- Added py.test configuration
+- Added pep8, pyflakes and coverage to tests
+- Enabled travis parallel build for multiple versions, docs and flake8
+- Added sphinx napoleon support
+- Added shields.io instead of pypip.in
+- Made the cookiecutter.json file smarter
+- Removed TODO since everything is contained in the issues
+
 2015-03-26
 ----------
 
@@ -24,22 +46,17 @@ Forked from `audreyr/cookiecutter-pypackage`_ on February 2, 2014.
 Testing
 ~~~~~~~
 
-- `flask`_/`werkzeug`_-style testsuites. See `werkzeug testsuite`_ on
-  github.
-- Use ``run-tests.py`` to run all tests, or pass in arguments to test a
-  particular ``TestSuite``, ``TestCase`` or ``Test``:
+- Use ``py.test`` to run tests or pass arguments to specify specific tests
+- Use ``tox`` to test everything in all supported python versions, build the
+  docs and test the code quality
 
   .. code-block:: bash
 
-      $ ./run-tests.py
-      $ ./run-tests.py yourpackage
-      $ ./run-tests.py repo_name.repo_name  # package_name.TestSuite
-      $ ./run-tests.py yourpackage.testsuite.test_something
-      $ ./run-tests.py testsuite.test_something
-      $ ./run-tests.py test_something
-      $ ./run-tests.py test_something test_something_docstring
-
-- ``setup.py`` downloads ``unittest2`` for python 2.6.
+      $ py.test
+      $ py.test tests
+      $ py.test tests/some_test.py
+      $ py.test tests/some_test.py::some_function
+      $ py.test tests/some_test.py::some_function[with_parameter]
 
 Python 2.7+3.3
 ~~~~~~~~~~~~~~
@@ -57,19 +74,19 @@ Python 2.7+3.3
 Packaging
 ~~~~~~~~~
 
-- ``repo_name/__init__.py`` + ``package_metadata.py``: Metadata in
-  ``repo_name/__init__.py`` e.g. ``__title__``, ``__author__`` can be
+- ``pkg_name/__init__.py`` + ``pkg_name/__about__.py``: Metadata in
+  ``pkg_name/__init__.py`` e.g. ``__title__``, ``__author__`` can be
   accessed via:
 
   .. code-block:: python
 
-      >>> import sys
-      >>> sys.path.insert(0, path_to_projectroot)  # on a one-off basis
-      >>> from package_metadata import p
-      >>> print(p.title)
+      >>> about = {}
+      >>> with open("{{ cookiecutter.repo_name }}/__about__.py") as fp:    
+      ...     exec(fp.read(), about)
+      >>> print about['title']
       Your project name
 
-  Keeps ``setup.py`` and ``doc/conf.py`` in sync with package metadata.
+  Keeps ``setup.py`` and ``docs/conf.py`` in sync with package metadata.
   pypi and readthedocs distributions build off the latest package data.
 
   This method avoids cost of tokenizing and importing python file and
@@ -80,20 +97,18 @@ Packaging
   in my package?`_ on StackOverflow.
 
 - Relative imports in ``repo_name/__init__.py``.
-- Relative imports in ``repo_name/testsuite/__init__.py``.
-- Relative imports in ``repo_name/testsuite/{{ cookiecutter.package_name }}.py``.
+- Module imports in ``tests/__init__.py``.
 
 Docs
 ~~~~
 
 - ``README.rst`` reStructuredText table for project information.
-- vim modelines for ``rst`` in ``TODO`` and ``CHANGELOG``.
+- vim modelines for ``rst`` in ``CHANGELOG``.
 - ``docs/requirements.txt``, which can be targetted to install `sphinx
   changelog`_ package on `ReadTheDocs`. It will also trigger `-r
   ../requirements.txt`.
 - `sphinx changelog`_ module, (imitation of `sqlalchemy`_, see `sqlalchemy
   changelog`_)
-- Add ``TODO`` and ``docs/roadmap.rst``.
 - Rename ``CHANGELOG.rst`` -> ``CHANGELOG``.
 - Add ``docs/api.rst`` for documentation of API code. Initial class
   imported with docstring example.

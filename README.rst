@@ -2,17 +2,15 @@
 cookiecutter-pypackage-pythonic
 ===============================
 
-.. image:: https://img.shields.io/travis/tony/cookiecutter-pypackage-pythonic.svg
-   :target: https://travis-ci.org/tony/cookiecutter-pypackage-pythonic
+.. image:: https://img.shields.io/travis/WoLpH/cookiecutter-pypackage-pythonic.svg
+   :target: https://travis-ci.org/WoLpH/cookiecutter-pypackage-pythonic
 
-Forked from `cookiecutter`_ template for a Python package. Forked from
-`audreyr/cookiecutter-pypackage`_.
-
-It is inspired by `Flask`_ and `werkzeug`_'s project style patterns. It is
-used on the `tmuxp`_, `cihai-python`_ and `vcspull`_ projects.
+Forked from Tony's cookiecutter template for Python packages but slightly
+modified to enable even more variable usage so it's not needed to update a
+bunch of files with every release.
 
 - Free software: BSD license
-- Vanilla testing setup with `unittest` and `python setup.py test`
+- Testing setup with `py.test`, `coverage` and `python setup.py test`
 - Travis-CI_: Ready for Travis Continuous Integration testing
 - Tox_ testing: Setup to easily test for Python 2.6, 2.7, 3.3
 - Sphinx_ docs: Documentation ready for generation with, for example, 
@@ -70,7 +68,7 @@ Packaging
       >>> print(about['__title__'])
       Your project name
 
-  Keeps ``setup.py`` and ``doc/conf.py`` in sync with package metadata.
+  Keeps ``setup.py`` and ``docs/conf.py`` in sync with package metadata.
   pypi and readthedocs distributions build off the latest package data.
 
   This method avoids cost of tokenizing and importing python file and
@@ -80,8 +78,7 @@ Packaging
   Derived from `pypa/warehouse`_.
 
 - Relative imports in ``repo_name/__init__.py``.
-- Relative imports in ``repo_name/testsuite/__init__.py``.
-- Relative imports in ``repo_name/testsuite/{{ cookiecutter.package_name }}.py``.
+- Module imports in ``tests/__init__.py``.
 
 .. _pypa/warehouse: https://github.com/pypa/warehouse
 
@@ -89,16 +86,15 @@ Docs
 ~~~~
 
 - ``README.rst`` reStructuredText table for project information.
-- vim modelines for ``rst`` in ``TODO`` and ``CHANGELOG``.
+- vim modelines for ``rst`` in ``CHANGELOG``.
 - ``docs/requirements.txt``, which can be targetted to install `sphinx
   changelog`_ package on `ReadTheDocs`. It will also trigger `-r
   ../requirements.txt`.
 - `sphinx changelog`_ module, (imitation of `sqlalchemy`_, see `sqlalchemy
   changelog`_)
-- Add ``TODO`` and ``docs/roadmap.rst``.
 - Rename ``CHANGELOG.rst`` -> ``CHANGELOG``.
 - Add ``docs/api.rst`` for documentation of API code. Initial class
-  imported with docstring example.
+  imported with napoleon docstring example.
 - Automatically generate header spacing based on length of
   ``cookiecutter`` variables.
 
@@ -106,7 +102,7 @@ Example data
 ~~~~~~~~~~~~
 
 - Example ``TestCase``.
-- Example Class w/ docstrings.
+- Example Class w/ sphinx napoleon docstrings.
 
 .. _werkzeug: http://werkzeug.pocoo.org
 .. _werkzeug testsuite: https://github.com/mitsuhiko/werkzeug/tree/master/werkzeug/testsuite
@@ -130,7 +126,7 @@ Generate a Python package project:
 
 .. code-block:: bash
 
-    $ cookiecutter https://github.com/tony/cookiecutter-pypackage.git
+    $ cookiecutter https://github.com/WoLpH/cookiecutter-pypackage.git
 
 Then:
 
@@ -153,6 +149,10 @@ Similar Cookiecutter Templates
 * `Nekroze/cookiecutter-pypackage`_: A fork of this with a PyTest test 
   runner, strict flake8 checking with Travis/Tox, and some docs and 
   `setup.py` differences.
+* `WoLpH/cookiecutter-pypackage-pythonic`_: Fork with a `py.test` setup
+  that includes Travis, Tox, `pep8`, `pyflakes` and `coverage` support. A
+  single unified metadata file for the package name, version and other info.
+  And documentation using Sphinx Napoleon.
 * Also see the `network`_ and `family tree`_ for this repo. (If you find
   anything that should be listed here, please add it and send a pull 
   request!)
@@ -179,19 +179,18 @@ make my own packaging experience better.
 See also
 --------
 
-* `tony/cookiecutter-flask`_: `Flask`_ starter, following similar pythonic
-  conventions.
-  
+* `wolph`_: My blog for tips/packages and other useful things
+* `wolph-github`_: Several other useful packages and/or programs
+
 .. _Flask: http://flask.pocoo.org/
-.. _tony/cookiecutter-flask: https://github.com/tony/cookiecutter-flask
+.. _wolph: http://wol.ph/
+.. _wolph-github: https://github.com/WoLpH
 .. _Travis-CI: http://travis-ci.org/
 .. _Tox: http://testrun.org/tox/
 .. _Sphinx: http://sphinx-doc.org/
 .. _ReadTheDocs: https://readthedocs.org/
 .. _`Nekroze/cookiecutter-pypackage`: https://github.com/Nekroze/cookiecutter-pypackage
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-.. _`network`: https://github.com/audreyr/cookiecutter-pypackage/network
-.. _`family tree`: https://github.com/audreyr/cookiecutter-pypackage/network/members
-.. _tmuxp: https://github.com/tony/tmuxp
-.. _vcspull: https://github.com/tony/vcspull
-.. _cihai-python: https://github.com/cihai/cihai-python
+.. _`WoLpH/cookiecutter-pypackage-pythonic`: https://github.com/WOLpH/cookiecutter-pypackage-pythonic
+.. _`network`: https://github.com/WoLpH/cookiecutter-pypackage/network
+.. _`family tree`: https://github.com/WoLpH/cookiecutter-pypackage/network/members

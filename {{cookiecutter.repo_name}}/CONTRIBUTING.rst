@@ -60,33 +60,45 @@ Ready to contribute? Here's how to set up `{{ cookiecutter.repo_name }}` for loc
 1. Fork the `{{ cookiecutter.repo_name }}` repo on GitHub.
 2. Clone your fork locally::
 
-    $ git clone git@github.com:your_name_here/{{ cookiecutter.repo_name }}.git
+    $ git clone --branch develop git@github.com:your_name_here/{{ cookiecutter.repo_name }}.git
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
 
     $ mkvirtualenv {{ cookiecutter.repo_name }}
     $ cd {{ cookiecutter.repo_name }}/
-    $ python setup.py develop
+    $ pip install -e .
 
-4. Create a branch for local development::
+4. Create a branch for local development with `git-flow-avh`_::
 
-    $ git checkout -b name-of-your-bugfix-or-feature
+    $ git-flow feature start name-of-your-bugfix-or-feature
+
+   Or without git-flow:
+
+    $ git checkout -b feature/name-of-your-bugfix-or-feature
    
    Now you can make your changes locally.
 
 5. When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox::
 
     $ flake8 {{ cookiecutter.repo_name }} tests
-    $ python setup.py test
+    $ py.test
     $ tox
 
-   To get flake8 and tox, just pip install them into your virtualenv. 
+   To get flake8 and tox, just pip install them into your virtualenv using the requirements file.
+   
+    $ pip install -r tests/requirements.txt
 
-6. Commit your changes and push your branch to GitHub::
+6. Commit your changes and push your branch to GitHub with `git-flow-avh`_::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
-    $ git push origin name-of-your-bugfix-or-feature
+    $ git-flow feature publish
+
+   Or without git-flow:
+
+    $ git add .
+    $ git commit -m "Your detailed description of your changes."
+    $ git push -u origin feature/name-of-your-bugfix-or-feature
 
 7. Submit a pull request through the GitHub website.
 
@@ -99,7 +111,7 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 2.6, 2.7, and 3.3, and for PyPy. Check 
+3. The pull request should work for Python 2.7, 3.3, and for PyPy. Check 
    https://travis-ci.org/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}/pull_requests
    and make sure that the tests pass for all supported Python versions.
 
@@ -108,4 +120,7 @@ Tips
 
 To run a subset of tests::
 
-	$ python -m unittest tests.test_{{ cookiecutter.repo_name }}
+	$ py.test tests/some_test.py
+
+.. _git-flow-avh: https://github.com/petervanderdoes/gitflow
+

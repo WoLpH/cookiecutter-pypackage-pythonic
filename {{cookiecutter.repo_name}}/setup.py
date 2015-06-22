@@ -7,58 +7,94 @@ import sys
 
 try:
     from setuptools import setup, find_packages
+    from setuptools.command.test import test as TestCommand
 except ImportError:
-    from distutils.core import setup, find_packages
+    from distutils.core import setup, find_packages, Command as TestCommand
 
 about = {}
-with open("{{ cookiecutter.repo_name }}/__about__.py") as fp:
+with open("{{ cookiecutter.pkg_name }}/__about__.py") as fp:
     exec(fp.read(), about)
 
-with open('requirements.txt') as f:
-    install_reqs = [line for line in f.read().split('\n') if line]
-    tests_reqs = []
+
+install_reqs = []
+tests_reqs = []
 
 if sys.version_info < (2, 7):
     install_reqs += ['argparse']
     tests_reqs += ['unittest2']
 
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    sys.exit()
+
+def parse_requirements(filename):
+    '''Read the requirements from the filename, supports includes'''
+    requirements = []
+
+    if os.path.isfile(filename):
+        with open(filename) as fh:
+            for line in fh:
+                line = line.strip()
+                if line.startswith('-r'):
+                    requirements += parse_requirements(
+                        os.path.join(os.path.dirname(filename),
+                                     line.split(' ', 1)[-1]))
+                elif line and not line.startswith('#'):
+                    requirements.append(line)
+
+    return requirements
+
+install_reqs += parse_requirements('requirements.txt')
+tests_reqs += parse_requirements('tests/requirements.txt')
 
 if sys.argv[-1] == 'info':
     for k, v in about.items():
         print('%s: %s' % (k, v))
     sys.exit()
 
-readme = open('README.rst').read()
-history = open('CHANGES').read().replace('.. :changelog:', '')
+with open('README.rst') as fh:
+    readme = fh.read()
+
+with open('CHANGES') as fh:
+    history = fh.read().replace('.. :changelog:', '')
+
+
+class PyTest(TestCommand):
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        # import here, cause outside the eggs aren't loaded
+        import pytest
+        errno = pytest.main(self.test_args)
+        sys.exit(errno)
 
 setup(
     name=about['__title__'],
     version=about['__version__'],
-    description=about['__description__'],
-    long_description=readme + '\n\n' + history,
     author=about['__author__'],
     author_email=about['__email__'],
-    url='https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}',
+    description=about['__description__'],
+    url=about['__url__'],
+    license=about['__license__'],
+    keywords=about['__title__'],
     packages=find_packages(exclude=['docs']),
+    long_description=readme + '\n\n' + history,
     include_package_data=True,
     install_requires=install_reqs,
     tests_require=tests_reqs,
-    license=about['__license__'],
-    keywords=about['__title__'],
     zip_safe=False,
+    cmdclass={'test': PyTest},
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: {{ cookiecutter.license }} License',
         'Natural Language :: English',
         "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: Implementation :: PyPy',
+        'Programming Language :: Python :: Implementation :: PyPy3',
     ],
-    test_suite='{{ cookiecutter.repo_name }}.testsuite',
 )

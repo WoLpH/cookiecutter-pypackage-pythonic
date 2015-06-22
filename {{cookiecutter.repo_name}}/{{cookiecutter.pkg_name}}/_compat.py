@@ -2,21 +2,59 @@ import sys
 
 PY2 = sys.version_info[0] == 2
 
-_identity = lambda x: x
+
+def _identity(x):  # pragma: no cover
+    return x
+
+__all__ = [
+    'BytesIO',
+    'PY2',
+    'StringIO',
+    'ascii_lowercase',
+    'cmp',
+    'configparser',
+    'console_to_str',
+    'imap',
+    'input',
+    'integer_types',
+    'iteritems',
+    'iterkeys',
+    'itervalues',
+    'izip',
+    'number_types',
+    'pickle',
+    'range_type',
+    'reraise',
+    'string_types',
+    'text_to_native',
+    'text_type',
+    'unichr',
+    'urllib',
+    'urlparse',
+    'urlparse',
+    'urlretrieve',
+    '_identity',
+]
 
 
-if PY2:
+if PY2:  # pragma: no cover
     unichr = unichr
     text_type = unicode
     string_types = (str, unicode)
     integer_types = (int, long)
     from urllib import urlretrieve
 
-    text_to_native = lambda s, enc: s.encode(enc)
+    def text_to_native(s, enc):
+        return s.encode(enc)
 
-    iterkeys = lambda d: d.iterkeys()
-    itervalues = lambda d: d.itervalues()
-    iteritems = lambda d: d.iteritems()
+    def iterkeys(d):
+        return d.iterkeys()
+
+    def itervalues(d):
+        return d.itervalues()
+
+    def iteritems(d):
+        return d.iteritems()
 
     from cStringIO import StringIO as BytesIO
     from StringIO import StringIO
@@ -37,19 +75,26 @@ if PY2:
 
     exec('def reraise(tp, value, tb=None):\n raise tp, value, tb')
 
-else:
+else:  # pragma: no cover
     unichr = chr
     text_type = str
     string_types = (str,)
     integer_types = (int, )
 
-    text_to_native = lambda s, enc: s
+    def text_to_native(s, enc):
+        return s
 
-    iterkeys = lambda d: iter(d.keys())
-    itervalues = lambda d: iter(d.values())
-    iteritems = lambda d: iter(d.items())
+    def iterkeys(d):
+        return iter(d.keys())
 
-    from io import StringIO, BytesIO
+    def itervalues(d):
+        return iter(d.values())
+
+    def iteritems(d):
+        return iter(d.items())
+
+    from io import StringIO
+    from io import BytesIO
     import pickle
     import configparser
 
@@ -57,7 +102,8 @@ else:
     imap = map
     range_type = range
 
-    cmp = lambda a, b: (a > b) - (a < b)
+    def cmp(a, b):
+        return (a > b) - (a < b)
 
     input = input
     from string import ascii_lowercase
@@ -68,7 +114,7 @@ else:
     console_encoding = sys.__stdout__.encoding
 
     def console_to_str(s):
-        """ From pypa/pip project, pip.backwardwardcompat. License MIT. """
+        ''' From pypa/pip project, pip.backwardwardcompat. License MIT. '''
         try:
             return s.decode(console_encoding)
         except UnicodeDecodeError:

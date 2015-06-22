@@ -1,12 +1,13 @@
 {
-	"full_name": "Your Name",
-	"email": "youremail@domain.com",
-	"github_username": "github_username",
-	"project_name": "Python Boilerplate",
-	"repo_name": "boilerplate",
-	"project_short_description": "Description of your python package",
-	"release_date": "2014-02-22",
-	"year": "2014",
-	"version": "0.1.0",
+	"full_name": "Rick van Hattem (Wolph)",
+	"email": "wolph@wol.ph",
+	"github_username": "WoLpH",
+	"project_name": "Clippy",
+	"repo_name": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+	"pkg_name": "{{ cookiecutter.project_name|lower|replace(' ', '_') }}",
+	"project_short_description": "Clippy is a clipboard sharing daemon to have a shared clipboard among SSH and other network connections within Vim and possibly other apps",
+	"release_date": "2015-06-17",
+	"year": "2015",
+	"version": "1.0",
 	"license": "BSD"
 }

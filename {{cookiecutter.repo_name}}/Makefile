@@ -27,7 +27,7 @@ lint:
 	flake8 {{ cookiecutter.repo_name }} tests
 
 test:
-	python setup.py test
+	py.test
 
 test-all:
 	tox
@@ -47,7 +47,8 @@ docs:
 	open docs/_build/html/index.html
 
 release: clean
-	python setup.py sdist upload
+	python setup.py register || true
+	python setup.py sdist upload build_sphinx upload_sphinx
 
 sdist: clean
 	python setup.py sdist
