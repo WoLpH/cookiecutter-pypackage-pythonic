@@ -69,7 +69,7 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 setup(
-    name=about['__title__'],
+    name=about['__package_name__'],
     version=about['__version__'],
     author=about['__author__'],
     author_email=about['__email__'],
@@ -95,6 +95,5 @@ setup(
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: Implementation :: PyPy',
-        'Programming Language :: Python :: Implementation :: PyPy3',
     ],
 )
