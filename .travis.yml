@@ -1,14 +1,17 @@
 language: python
 
 python:
-  - "3.4"
-  - "2.7"
-  - "pypy"
+    - "3.4"
+    - "2.7"
+    - "pypy"
 
 before_install:
-  - pip install cookiecutter
-  - cookiecutter . --no-input
+    - pip install cookiecutter
+    - cookiecutter . --no-input
 
-install: pip install -r ./project_name/tests/requirements.txt
+install:
+    - pip install -r ./project_name/tests/requirements.txt
+    - pip install -e project_name
+
 script: cd project_name && py.test
 
