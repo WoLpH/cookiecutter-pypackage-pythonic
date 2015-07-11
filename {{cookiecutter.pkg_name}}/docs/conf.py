@@ -32,12 +32,12 @@ sys.path.insert(0, project_root)
 
 # package data
 about = {}
-with open(os.path.join(project_root, '{{ cookiecutter.repo_name }}/__about__.py')) as fp:
+with open(os.path.join(project_root, '{{ cookiecutter.pkg_name }}/__about__.py')) as fp:
     exec(fp.read(), about)
 
 
-import {{ cookiecutter.repo_name }}
-assert {{ cookiecutter.repo_name }}
+import {{ cookiecutter.pkg_name }}
+assert {{ cookiecutter.pkg_name }}
 
 # -- General configuration ----------------------------------------------------
 
