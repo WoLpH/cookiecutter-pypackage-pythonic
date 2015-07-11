@@ -1,4 +1,3 @@
 -r ../requirements.txt
 changelog
-sphinx
-sphinxcontrib-napoleon
+sphinx>=1.3
