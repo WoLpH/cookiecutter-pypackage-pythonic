@@ -3,15 +3,15 @@
 {{ '=' * cookiecutter.project_name|count }}
 
 
-.. image:: https://travis-ci.org/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}.png?branch=master
+.. image:: https://travis-ci.org/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}.svg?branch=master
     :alt: {{ cookiecutter.project_name }} test status
     :target: https://travis-ci.org/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}
 
-.. image:: https://badge.fury.io/py/{{ cookiecutter.repo_name }}.png
+.. image:: https://badge.fury.io/py/{{ cookiecutter.repo_name }}.svg
     :alt: {{ cookiecutter.project_name }} Pypi version
     :target: https://pypi.python.org/pypi/{{ cookiecutter.repo_name }}
 
-.. image:: https://coveralls.io/repos/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}/badge.png?branch=master
+.. image:: https://coveralls.io/repos/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}/badge.svg?branch=master
     :alt: {{ cookiecutter.project_name }} code coverage
     :target: https://coveralls.io/r/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}?branch=master
 
