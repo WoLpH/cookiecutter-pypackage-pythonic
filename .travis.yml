@@ -14,5 +14,7 @@ install:
     - pip install -r ./project_name/tests/requirements.txt
     - pip install -e project_name
 
-script: cd project_name && py.test && tox
+script:
+    - cd project_name && py.test
+    - tox
 
