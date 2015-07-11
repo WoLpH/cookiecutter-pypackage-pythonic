@@ -7,11 +7,12 @@ python:
 
 before_install:
     - pip install cookiecutter
+    - pip install tox detox
     - cookiecutter . --no-input
 
 install:
     - pip install -r ./project_name/tests/requirements.txt
     - pip install -e project_name
 
-script: cd project_name && py.test
+script: cd project_name && py.test && detox
 
